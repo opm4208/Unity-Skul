@@ -34,6 +34,11 @@ public class Monster : MonoBehaviour
         Destroy(gameObject, 3f);
     }
 
+    public virtual void Hit(int damage)
+    {
+
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")

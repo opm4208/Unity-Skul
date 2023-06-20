@@ -7,8 +7,11 @@ public class Player : MonoBehaviour
     protected int maxHp=20;
     protected int hp;
     protected int damage;
-    private void Awake()
+    protected bool attackCT;
+    public bool isAttack;
+    protected void Awake()
     {
         hp = maxHp;
+        damage = 1;
     }
 }

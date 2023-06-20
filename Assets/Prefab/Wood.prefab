@@ -352,9 +352,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5db2149647789e428d400b654e26c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  patrolTime: 2
-  traceRange: 2
+  moveSpeed: 0
+  patrolTime: 0
+  traceRange: 0
   changeRanged:
     m_PersistentCalls:
       m_Calls:
@@ -394,23 +394,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerAttack, Assembly-CSharp
-        m_MethodName: Hit
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   playerMask:
     serializedVersion: 2
     m_Bits: 8
-  right: 1
+  right: 0
   attackCool: 0
+  hitCheck: 0
 --- !u!1 &4243568525894821407
 GameObject:
   m_ObjectHideFlags: 0

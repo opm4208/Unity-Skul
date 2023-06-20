@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : Player
 {
     [SerializeField] LayerMask groundLayer;
 
@@ -14,12 +14,13 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float maxSpeed;
     [SerializeField] private float movePower;
 
-    private Animator animator;
+    public Animator animator;
     private Rigidbody2D rb;
-    private SpriteRenderer rbSprite;
+    public SpriteRenderer rbSprite;
     private Vector2 inputDir;
     private Vector3 attackRangePosition;
     private Coroutine dashRoutine;
+    private Coroutine dashCTRoutine;
 
     public bool doubleJump;
     public bool isGround;
@@ -41,10 +42,6 @@ public class PlayerMove : MonoBehaviour
     {
         if(!isDash)
             Move();
-    }
-    private void FixedUpdate()
-    {
-        GroundCheck();
     }
     public void Move()
     {
@@ -74,13 +71,13 @@ public class PlayerMove : MonoBehaviour
             animator.SetTrigger("Jump");
             rb.velocity = Vector2.up * jumpPower;
             doubleJump = false;
-            animator.SetTrigger("DoubleJump");
         }
     }
     private void OnJump(InputValue value)
     {
-        if (isGround || doubleJump)
-            Jump();
+        if ( isGround || doubleJump)
+            if(!isAttack)
+                Jump();
     }
 
 
@@ -93,7 +90,6 @@ public class PlayerMove : MonoBehaviour
             currentTime += Time.deltaTime;
             if (currentTime >= 0.5f)
             {
-                StartCoroutine(DashCoolTime());
                 dashCoolTime = true;
                 break;
             }
@@ -114,8 +110,12 @@ public class PlayerMove : MonoBehaviour
     }
     private void OnDash(InputValue value)
     {
-        if(dashCount<2)
+        if (dashCount < 2&&!isAttack)
+        {
+            if (dashCount == 1)
+                StopCoroutine(dashCTRoutine);
             dashRoutine = StartCoroutine(Dash());
+        }
     }
     private void OnMove(InputValue value)
     {
@@ -136,26 +136,7 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-    
-    
-    private void GroundCheck()
-    {
-
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1.5f, groundLayer);
-        if (hit.collider != null)
-        {
-            Debug.DrawRay(transform.position, new Vector3(hit.point.x, hit.point.y, 0) - transform.position, Color.red);
-            isGround = true;
-            doubleJump = true;
-            animator.SetBool("GroundCheck", true);
-        }
-        else
-        {
-            isGround = false;
-            animator.SetBool("GroundCheck", false);
-            Debug.DrawRay(transform.position, Vector3.down * 1.5f, Color.green);
-        }
-    }
+   
     private void DashEnd()
     {
         rb.gravityScale = 1;
@@ -163,6 +144,7 @@ public class PlayerMove : MonoBehaviour
     }
     private void DashStart()
     {
+        dashCTRoutine = StartCoroutine(DashCoolTime());
         dashCount++;
         rb.gravityScale = 0;
         rb.velocity = Vector2.up * 0;

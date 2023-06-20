@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class Wood : TraceMonster
 {
-    public enum State { Idle, Trace, Attack, patrol, Hit, Size }
+    public enum State { Idle, Trace, Attack, patrol, Size }
 
     public UnityEvent changeRanged;
 
@@ -17,12 +17,14 @@ public class Wood : TraceMonster
     private BoxCollider2D traceRangeCollider;
     private BoxCollider2D attackRangeCollider;
     private SpriteRenderer render;
+    private Coroutine hitRoutine;
     private int hitCount;
     private int DirChange=1;
 
 
     public bool right;   // 왼쪽을 보는지 오른쪽을 보는지 확인용
     public bool attackCool;
+    public bool hitCheck;
 
     private void Awake()
     {
@@ -41,7 +43,6 @@ public class Wood : TraceMonster
         states[(int)State.Trace] = new TraceState(this);
         states[(int)State.Attack] = new AttackState(this);
         states[(int)State.patrol] = new patrolState(this);
-        states[(int)State.Hit] = new HitState(this);
 
         anim = GetComponent<Animator>();
         render = GetComponent<SpriteRenderer>();
@@ -59,7 +60,6 @@ public class Wood : TraceMonster
 
     private void Update()
     {
-        Debug.Log(curState);
         states[(int)curState].Update();
     }
 
@@ -85,7 +85,19 @@ public class Wood : TraceMonster
 
     public void Attack()
     {
-        anim.SetTrigger("Attack");
+        //if (!hitCheck)
+        //{
+        //    /*anim.SetTrigger("Attack");*/
+        //}
+        if (!attackCool)
+        {
+            attackCool = true;
+            anim.SetTrigger("Attack");
+            StartCoroutine(AttackCoolTime());
+        }
+    }
+    public void AttackRange()
+    {
         if (right)
         {
             Vector2 attackPosition = new Vector2(transform.position.x + 1, transform.position.y);
@@ -95,15 +107,12 @@ public class Wood : TraceMonster
             {
                 if (playerMask.IsContain(collider.gameObject.layer))
                 {
-                    attackCool = true;
-                    StartCoroutine(AttackCoolTime());
                     collider.gameObject.GetComponent<PlayerAttack>().Hit(damage);
                 }
             }
         }
         else
         {
-            Debug.Log("sad");
             Vector2 attackPosition = new Vector2(transform.position.x - 1, transform.position.y);
             Vector2 attackBox = new Vector2(attackRange, attackRange);
             Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition, attackBox, 0);
@@ -111,12 +120,30 @@ public class Wood : TraceMonster
             {
                 if (playerMask.IsContain(collider.gameObject.layer))
                 {
-                    attackCool = true;
-                    StartCoroutine(AttackCoolTime());
                     collider.gameObject.GetComponent<PlayerAttack>().Hit(damage);
                 }
             }
         }
+    }
+    public override void Hit(int damage)
+    {
+        if (hitCheck)
+            StopCoroutine(hitRoutine);
+        anim.SetBool("IsHit", true);
+        hitCheck = true;
+        hitRoutine = StartCoroutine(HitRoutine());
+        
+        if(hitCount > 1)
+            hitCount = 0;
+        hitCount++;
+        anim.SetInteger("Hit", hitCount);
+        hp -= damage;
+    }
+    IEnumerator HitRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("IsHit", false);
+        hitCheck = false;
     }
     public void IdleStateChange()
     {
@@ -271,27 +298,6 @@ public class Wood : TraceMonster
                 wood.ChangeState(State.Idle);
             }
             wood.transform.Translate(wood.moveSpeed * Vector2.left * wood.DirChange * Time.deltaTime);
-        }
-    }
-
-    public class HitState : StateBase
-    {
-        private Wood wood;
-
-        public HitState(Wood wood)
-        {
-            this.wood = wood;
-        }
-        public override void Enter()
-        {
-        }
-
-        public override void Exit()
-        {
-        }
-
-        public override void Update()
-        {
         }
     }
 }
