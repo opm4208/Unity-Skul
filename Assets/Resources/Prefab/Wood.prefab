@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4243568524809894489}
   - component: {fileID: 4243568524809894488}
-  - component: {fileID: 4243568524809894495}
+  - component: {fileID: 1321043916}
   m_Layer: 8
   m_Name: TraceRange
   m_TagString: Untagged
@@ -59,7 +59,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 1.5}
   m_EdgeRadius: 0
---- !u!114 &4243568524809894495
+--- !u!114 &1321043916
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,16 +68,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4243568524809894490}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26c5aa7361489f14ca599154c9232a6d, type: 3}
+  m_Script: {fileID: 11500000, guid: 44a864c068b4de64b928b64286a3d81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMask:
+  layerMask:
     serializedVersion: 2
     m_Bits: 8
-  OnTraced:
+  OnEnterTrigger:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4243568525614965670}
+      - m_Target: {fileID: 2069679449}
         m_TargetAssemblyTypeName: Wood, Assembly-CSharp
         m_MethodName: TraceStateChange
         m_Mode: 1
@@ -89,10 +89,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnIdled:
+  OnExitTrigger:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4243568525614965670}
+      - m_Target: {fileID: 2069679449}
         m_TargetAssemblyTypeName: Wood, Assembly-CSharp
         m_MethodName: IdleStateChange
         m_Mode: 1
@@ -178,7 +178,7 @@ MonoBehaviour:
   OnTurned:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4243568525614965670}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Wood, Assembly-CSharp
         m_MethodName: TurnBack
         m_Mode: 1
@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 4243568525614965667}
   - component: {fileID: 4243568525614965671}
   - component: {fileID: 4243568525614965664}
-  - component: {fileID: 4243568525614965670}
+  - component: {fileID: 2069679449}
   m_Layer: 7
   m_Name: Wood
   m_TagString: Monster
@@ -340,7 +340,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4243568525614965670
+--- !u!114 &2069679449
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -349,7 +349,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4243568525614965724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5db2149647789e428d400b654e26c21, type: 3}
+  m_Script: {fileID: 11500000, guid: 9914473001de3d44e9c4d03802cf8eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
@@ -474,7 +474,7 @@ MonoBehaviour:
   OnAttacked:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4243568525614965670}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Wood, Assembly-CSharp
         m_MethodName: AttackStateChange
         m_Mode: 1
@@ -489,7 +489,7 @@ MonoBehaviour:
   OnTraced:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4243568525614965670}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Wood, Assembly-CSharp
         m_MethodName: TraceStateChange
         m_Mode: 1
@@ -575,7 +575,7 @@ MonoBehaviour:
   OnTurned:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4243568525614965670}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Wood, Assembly-CSharp
         m_MethodName: TurnBack
         m_Mode: 1

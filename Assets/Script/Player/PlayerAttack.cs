@@ -9,7 +9,7 @@ public class PlayerAttack : Player
     public Animator animator;
     private PlayerMove playerMove;
     public LayerMask monsetMask;
-    private  void Awake()
+    protected override void Awake()
     {
         base.Awake(); 
         playerMove = GetComponent<PlayerMove>();

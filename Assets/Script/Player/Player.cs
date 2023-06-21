@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     protected int damage;
     protected bool attackCT;
     public bool isAttack;
-    protected void Awake()
+    protected virtual void Awake()
     {
         hp = maxHp;
         damage = 1;

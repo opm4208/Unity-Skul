@@ -15,5 +15,5 @@ MonoBehaviour:
   standingMonsters:
   - maxHp: 30
     damage: 2
-    attackRange: 2
-    coolTime: 3
+    attackRange: 6
+    coolTime: 5

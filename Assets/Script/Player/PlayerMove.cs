@@ -29,7 +29,7 @@ public class PlayerMove : Player
 
     public int dashCount;
 
-    private void Awake()
+    protected override void Awake()
     {
         GameManager.Player = transform;
         rb = GetComponent<Rigidbody2D>();

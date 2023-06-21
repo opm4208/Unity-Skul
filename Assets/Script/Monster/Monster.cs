@@ -36,7 +36,7 @@ public class Monster : MonoBehaviour
 
     public virtual void Hit(int damage)
     {
-
+        hp -= damage;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

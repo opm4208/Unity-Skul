@@ -26,7 +26,7 @@ public class Wood : TraceMonster
     public bool attackCool;
     public bool hitCheck;
 
-    private void Awake()
+    protected override void Awake()
     {
         data = GameManager.Resource.Load<TraceMonsterData>("Data/Wood");
         maxHp = data.TraceMonsters[0].maxHp;
@@ -85,10 +85,6 @@ public class Wood : TraceMonster
 
     public void Attack()
     {
-        //if (!hitCheck)
-        //{
-        //    /*anim.SetTrigger("Attack");*/
-        //}
         if (!attackCool)
         {
             attackCool = true;
@@ -137,7 +133,7 @@ public class Wood : TraceMonster
             hitCount = 0;
         hitCount++;
         anim.SetInteger("Hit", hitCount);
-        hp -= damage;
+        base.Hit(damage);
     }
     IEnumerator HitRoutine()
     {

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class StandingMonster : Monster
 {
-    
+    protected StandingMonsterData data;
 }
