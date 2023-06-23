@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static TraceMonsterData;
 
 [CreateAssetMenu(fileName = "StandingMonsterData", menuName = "Data/StandingMonster")]
 public class StandingMonsterData : ScriptableObject

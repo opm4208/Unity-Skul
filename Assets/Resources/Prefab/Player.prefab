@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 1999606127321577803}
   - component: {fileID: 1999606127321577806}
   - component: {fileID: 1999606127321577807}
-  - component: {fileID: 1999606127321577809}
   - component: {fileID: 1999606127321577808}
+  - component: {fileID: 1941489431}
+  - component: {fileID: 1941489432}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -150,21 +151,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 033d31287edbf534abaf291be27f386d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttack: 0
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  jumpPower: 10
-  DashPower: 4
-  maxSpeed: 3
-  movePower: 3
-  animator: {fileID: 0}
-  rbSprite: {fileID: 0}
-  doubleJump: 0
-  isGround: 0
-  isDash: 0
-  dashCoolTime: 0
-  dashCount: 0
+  OnStopDash:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1941489432}
+        m_TargetAssemblyTypeName: PlayerDash, Assembly-CSharp
+        m_MethodName: StopDash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!50 &1999606127321577806
 Rigidbody2D:
   serializedVersion: 4
@@ -207,19 +208,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1999606127321577809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1999606127321577799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eaedf9c10995a44eb8ce260d50fefac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isAttack: 0
 --- !u!114 &1999606127321577808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,12 +220,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 786c2252e3ac00d46852bb9da51700c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttack: 0
-  attackCombo: 0
-  animator: {fileID: 0}
-  monsetMask:
+--- !u!114 &1941489431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999606127321577799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eaedf9c10995a44eb8ce260d50fefac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 20
+  hp: 0
+  damage: 1
+  movePower: 3
+  maxSpeed: 3
+  monsterMask:
     serializedVersion: 2
     m_Bits: 128
+  isAttack: 0
+  attackCT: 0
+  attackCombo: 0
+  maxAttackCombo: 2
+  jumpPower: 0
+  isGround: 0
+  doubleJump: 0
+  dashPower: 3
+  isDash: 0
+  dashCoolTime: 0
+  dashCount: 0
+  animator: {fileID: 0}
+  rb: {fileID: 0}
+  rbSprite: {fileID: 0}
+  player: {fileID: 0}
+--- !u!114 &1941489432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999606127321577799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ff68070ef5150d4dbab36600153eadb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1999606128668122387
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,3 +338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7b8886f01cfcbb4184a2f5687a92031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  isGround: 0
+  doubleJump: 0

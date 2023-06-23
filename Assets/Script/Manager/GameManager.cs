@@ -9,13 +9,13 @@ public class GameManager : MonoBehaviour
     private static PoolManager poolManager;
     private static ResourceManager resourceManager;
     private static UiManager uiManager;
-    private static Transform player;
+    private static Player player;
 
     public static GameManager Instance { get { return instance; } }
     public static PoolManager Pool { get { return poolManager; } }
     public static ResourceManager Resource { get { return resourceManager; } }
     public static UiManager UI { get { return uiManager; } }
-    public static Transform Player { get { return player; } set { player = value; } }
+    public static Player Player { get { return player; } set { player = value; } }
 
     private void Awake()
     {

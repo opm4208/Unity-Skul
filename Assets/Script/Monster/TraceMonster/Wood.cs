@@ -197,7 +197,8 @@ public class Wood : TraceMonster
         public override void Update()
         {
             idleTime += Time.deltaTime;
-            if (idleTime > 2)
+            if (idleTime > 4
+                )
             {
                 idleTime = 0;
                 wood.ChangeState(State.patrol);
@@ -225,7 +226,7 @@ public class Wood : TraceMonster
 
         public override void Update()
         {
-            Vector2 dir = (GameManager.Player.position- wood.transform.position).normalized;
+            Vector2 dir = (GameManager.Player.player.position- wood.transform.position).normalized;
             if (dir.x <= 0)
             {
                 if (wood.right)

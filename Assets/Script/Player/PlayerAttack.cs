@@ -3,34 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerAttack : Player
+public class PlayerAttack : MonoBehaviour
 {
-    public int attackCombo=0;
-    public Animator animator;
-    private PlayerMove playerMove;
-    public LayerMask monsetMask;
-    protected override void Awake()
+ 
+    private Player player;
+
+    private void Start()
     {
-        base.Awake(); 
-        playerMove = GetComponent<PlayerMove>();
-        animator = GetComponent<Animator>();
+        player = GameManager.Player;
     }
     public void Hit(int damage)
     {
-        hp -= damage;
-        Debug.Log(hp);
+        player.hp -= damage;
+        Debug.Log(player.hp);
     }
     private void Attack()
     {
-        if (!attackCT)
+        if (!player.attackCT)
         {
-            if (attackCombo > 1)
-                attackCombo = 0;
-            attackCombo++;
-            playerMove.isAttack= true;
-            animator.SetInteger("AttackCount", attackCombo);
-            animator.SetTrigger("Attack");
-            attackCT = true;
+            if (player.attackCombo > 1)
+                player.attackCombo = 0;
+            player.attackCombo++;
+            player.isAttack = true;
+            player.animator.SetInteger("AttackCount", player.attackCombo);
+            player.animator.SetTrigger("Attack");
+            player.attackCT = true;
             StartCoroutine(AttackCT());
             AttackRange();
         }   
@@ -42,16 +39,16 @@ public class PlayerAttack : Player
     private void AttackRange()
     {
         // ¿À¸¥ÂÊ
-        if (!playerMove.rbSprite.flipX)
+        if (!player.rbSprite.flipX)
         {
             Vector2 attackPosition = new Vector2(transform.position.x + 0.4f, transform.position.y);
             Vector2 attackBox = new Vector2(1.5f, 1);
             Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition, attackBox, 0);
             foreach (Collider2D collider in colliders)
             {
-                if (monsetMask.IsContain(collider.gameObject.layer))
+                if (player.monsterMask.IsContain(collider.gameObject.layer))
                 {
-                    collider.gameObject.GetComponent<Monster>().Hit(damage);
+                    collider.gameObject.GetComponent<Monster>().Hit(player.damage);
                 }
             }
         }
@@ -62,9 +59,9 @@ public class PlayerAttack : Player
             Collider2D[] colliders = Physics2D.OverlapBoxAll(attackPosition, attackBox, 0);
             foreach (Collider2D collider in colliders)
             {
-                if (monsetMask.IsContain(collider.gameObject.layer))
+                if (player.monsterMask.IsContain(collider.gameObject.layer))
                 {
-                    collider.gameObject.GetComponent<Monster>().Hit(damage);
+                    collider.gameObject.GetComponent<Monster>().Hit(player.damage);
                 }
             }
         }
@@ -79,8 +76,8 @@ public class PlayerAttack : Player
     IEnumerator AttackCT()
     {
         yield return new WaitForSeconds(0.3f);
-        playerMove.isAttack = false;
-        attackCT = false;
+        player.isAttack = false;
+        player.attackCT = false;
     }
 
 }

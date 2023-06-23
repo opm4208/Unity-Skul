@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class PlayerGC : MonoBehaviour
 {
-    private PlayerMove player;
-    private void Awake()
+    public Animator animator;
+    public bool isGround;
+    public bool doubleJump;
+
+
+    private void Start()
     {
-        player = GetComponentInParent<PlayerMove>();
+        animator = GameManager.Player.animator;
+        isGround = GameManager.Player.isGround;
+        doubleJump = GameManager.Player.doubleJump;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        player.isGround = true;
-        player.doubleJump = true;
-        player.animator.SetBool("GroundCheck", true);
+        isGround = true;
+        doubleJump = true;
+        animator.SetBool("GroundCheck", true);
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        player.isGround = false;
-        player.animator.SetBool("GroundCheck", false);
+        isGround = false;
+        animator.SetBool("GroundCheck", false);
     }
 }
