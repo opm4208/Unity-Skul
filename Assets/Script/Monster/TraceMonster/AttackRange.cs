@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class AttackRange : MonoBehaviour
 {
+    public LayerMask layerMask;
     public UnityEvent OnAttacked;
     public UnityEvent OnTraced;
 
@@ -30,12 +31,18 @@ public class AttackRange : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        OnAttacked?.Invoke();
+        if (layerMask.IsContain(collision.gameObject.layer))
+        {
+            OnAttacked?.Invoke();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        OnTraced?.Invoke();
+        if (layerMask.IsContain(collision.gameObject.layer))
+        {
+            OnTraced?.Invoke();
+        }
     }
 
 }

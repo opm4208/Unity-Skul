@@ -10,6 +10,7 @@ public abstract class PlayerSkillAbstract: MonoBehaviour
     protected IEnumerator CoolTime()
     {
         yield return new WaitForSeconds(cooltime);
+        Debug.Log("ds");
         cooltimecheck = true;
     } 
     public abstract void CoolTimeSet();

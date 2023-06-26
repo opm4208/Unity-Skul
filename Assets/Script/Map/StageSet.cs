@@ -13,6 +13,7 @@ public class StageSet : MonoBehaviour
     {
         change = GameManager.Resource.Load<Sprite>("Map/CoinOpen");
         door = transform.GetChild(2).GetComponent<SpriteRenderer>();
+
     }
     void Update()
     {

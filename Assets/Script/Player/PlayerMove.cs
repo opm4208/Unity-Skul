@@ -14,7 +14,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<Player>();
+        player = GameManager.Player;
     }
 
     private void Update()

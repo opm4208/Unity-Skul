@@ -10,17 +10,18 @@ public class NormalSkillA : PlayerSkillAbstract
     {
         head = GameManager.Resource.Load<GameObject>("Prefab/Head");
         cooltimecheck = true;
-        //GameManager.Player.skillA = this;
+        CoolTimeSet();
+        
     }
     public override void CoolTimeSet()
     {
-        cooltime = 10;
+        cooltime = 3;
     }
 
     public override void Skill()
     {
         cooltimecheck = false;
         StartCoroutine(CoolTime());
-        GameManager.Resource.Instantiate(head, GameManager.Player.player.GetChild(1).position, Quaternion.Euler(0, 0, 0), null, true);
+        GameManager.Player.head = GameManager.Resource.Instantiate(head, GameManager.Player.player.GetChild(1).position, Quaternion.Euler(0, 0, 0), null, true).transform;
     }
 }

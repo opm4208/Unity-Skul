@@ -6,13 +6,13 @@ using UnityEngine.Events;
 
 public class Wood : TraceMonster
 {
-    public enum State { Idle, Trace, Attack, patrol, Size }
+    public enum State { Idle, Trace, Attack, patrol, Die, Size }
 
     public UnityEvent changeRanged;
 
     public LayerMask playerMask;
     private StateBase[] states; // state를 저장하기 위한 배열
-    private State curState;     // 현재 상태
+    public State curState;     // 현재 상태
     private Animator anim;
     private BoxCollider2D traceRangeCollider;
     private BoxCollider2D attackRangeCollider;
@@ -25,9 +25,11 @@ public class Wood : TraceMonster
     public bool right;   // 왼쪽을 보는지 오른쪽을 보는지 확인용
     public bool attackCool;
     public bool hitCheck;
+    public bool die;
 
     protected override void Awake()
     {
+        base.Awake();
         data = GameManager.Resource.Load<TraceMonsterData>("Data/Wood");
         maxHp = data.TraceMonsters[0].maxHp;
         hp = maxHp;
@@ -43,6 +45,7 @@ public class Wood : TraceMonster
         states[(int)State.Trace] = new TraceState(this);
         states[(int)State.Attack] = new AttackState(this);
         states[(int)State.patrol] = new patrolState(this);
+        states[(int)State.Die] = new DieState(this);
 
         anim = GetComponent<Animator>();
         render = GetComponent<SpriteRenderer>();
@@ -123,17 +126,31 @@ public class Wood : TraceMonster
     }
     public override void Hit(int damage)
     {
-        if (hitCheck)
-            StopCoroutine(hitRoutine);
-        anim.SetBool("IsHit", true);
-        hitCheck = true;
-        hitRoutine = StartCoroutine(HitRoutine());
-        
-        if(hitCount > 1)
-            hitCount = 0;
-        hitCount++;
-        anim.SetInteger("Hit", hitCount);
-        base.Hit(damage);
+        if (!die)
+        {
+            if (hitCheck)
+                StopCoroutine(hitRoutine);
+            anim.SetBool("IsHit", true);
+            hitCheck = true;
+            hitRoutine = StartCoroutine(HitRoutine());
+
+            if (hitCount > 1)
+                hitCount = 0;
+            hitCount++;
+            anim.SetInteger("Hit", hitCount);
+            base.Hit(damage);
+            if (hp < 0)
+                Die();
+        }
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(1).gameObject.SetActive(false);
+        die= true;
+        curState = State.Die;
     }
     IEnumerator HitRoutine()
     {
@@ -295,6 +312,29 @@ public class Wood : TraceMonster
                 wood.ChangeState(State.Idle);
             }
             wood.transform.Translate(wood.moveSpeed * Vector2.left * wood.DirChange * Time.deltaTime);
+        }
+    }
+    public class DieState : StateBase
+    {
+        private Wood wood;
+
+        public DieState(Wood wood)
+        {
+            this.wood = wood;
+        }
+        public override void Enter()
+        {
+            
+        }
+
+        public override void Exit()
+        {
+            
+        }
+
+        public override void Update()
+        {
+            
         }
     }
 }

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Potal : MonoBehaviour
 {
-    public Transform startPoint;
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Input.GetKey(KeyCode.UpArrow)) 
-            collision.transform.position = startPoint.position;
+        if (Input.GetKey(KeyCode.E)&&GameManager.Stage.monsterCount<1)
+        {
+            GameManager.Stage.NextStage();
+            collision.gameObject.transform.position = GameManager.Stage.curStage.transform.GetChild(1).position;
+        }
     }
 }

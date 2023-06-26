@@ -33,20 +33,17 @@ public class Player : MonoBehaviour
     public Transform player;
     public PlayerSkillAbstract skillA;
     public PlayerSkillAbstract skillB;
-    public NormalSkillA normalA;
     
     private void Awake()
     {
 
         hp = maxHp;
-        damage = 1;
+        damage = 10;
         dashPower = 3;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         rbSprite = GetComponent<SpriteRenderer>();
         player = GetComponent<Transform>();
-        skillA = GetComponent<NormalSkillA>();
-        skillB = GetComponent<NormalSkillB>();
         GameManager.Player = this;
     }
 
@@ -55,7 +52,6 @@ public class Player : MonoBehaviour
         if (skillA.cooltimecheck)
         {
             skillA.Skill();
-            skillA.cooltimecheck = false;
         }
     }
     private void OnSkillS(InputValue value)

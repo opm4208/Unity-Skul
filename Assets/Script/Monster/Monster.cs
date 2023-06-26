@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,10 +29,18 @@ public class Monster : MonoBehaviour
 
     protected virtual void Die()
     {
-        animator.SetBool("Die", true);
-        collider.enabled = false;
-
+        animator.SetTrigger("Die");
+        GameManager.Stage.monsterCount -= 1;
         Destroy(gameObject, 3f);
+    }
+
+    private void SetLayersRecursively(Transform trans)
+    {
+        trans.gameObject.layer = 10;
+        foreach(Transform child in trans)
+        {
+            SetLayersRecursively(child);
+        }
     }
 
     public virtual void Hit(int damage)

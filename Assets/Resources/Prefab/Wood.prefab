@@ -178,7 +178,7 @@ MonoBehaviour:
   OnTurned:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2069679449}
         m_TargetAssemblyTypeName: Wood, Assembly-CSharp
         m_MethodName: TurnBack
         m_Mode: 1
@@ -397,9 +397,11 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 8
+  curState: 0
   right: 0
   attackCool: 0
   hitCheck: 0
+  die: 0
 --- !u!1 &4243568525894821407
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,10 +473,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f5ecbb723503449aab4f4bb939e314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8
   OnAttacked:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2069679449}
         m_TargetAssemblyTypeName: Wood, Assembly-CSharp
         m_MethodName: AttackStateChange
         m_Mode: 1
@@ -489,7 +494,7 @@ MonoBehaviour:
   OnTraced:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2069679449}
         m_TargetAssemblyTypeName: Wood, Assembly-CSharp
         m_MethodName: TraceStateChange
         m_Mode: 1
@@ -575,7 +580,7 @@ MonoBehaviour:
   OnTurned:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2069679449}
         m_TargetAssemblyTypeName: Wood, Assembly-CSharp
         m_MethodName: TurnBack
         m_Mode: 1

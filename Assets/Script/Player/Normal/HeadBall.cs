@@ -15,8 +15,7 @@ public class HeadBall : EnemyBall
 
     private void Start()
     {
-        head = gameObject.transform;
-        GameManager.Player.head = head;
+        GameManager.Player.head = transform;
         quaternion = 0;
         rbsprite = GameManager.Player.rbSprite.flipX;
         spriteRenderer = GetComponent<SpriteRenderer>();

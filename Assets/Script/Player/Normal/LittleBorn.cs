@@ -9,11 +9,6 @@ public class LittleBorn : Head
     {
         sprender = GameManager.Resource.Load<Sprite>("Map/BossClose");
     }
-    private void Update()
-    {
-        Debug.Log(skillA);
-    }
-
     public class NormalSkillA : PlayerSkillAbstract
     {
         private GameObject head;

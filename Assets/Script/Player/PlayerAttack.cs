@@ -66,13 +66,13 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(new Vector2(transform.position.x + 0.4f, transform.position.y), new Vector2(1.5f, 1));
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(new Vector2(transform.position.x - 0.4f, transform.position.y), new Vector2(1.5f, 1));
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireCube(new Vector2(transform.position.x + 0.4f, transform.position.y), new Vector2(1.5f, 1));
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireCube(new Vector2(transform.position.x - 0.4f, transform.position.y), new Vector2(1.5f, 1));
+    //}
     IEnumerator AttackCT()
     {
         yield return new WaitForSeconds(0.3f);
