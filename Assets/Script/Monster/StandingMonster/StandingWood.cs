@@ -7,6 +7,7 @@ public class StandingWood : StandingMonster
 {
     public enum State { Idle, MeleeAttack, RangeAttack, Size }
 
+
     public LayerMask playerMask;
     private StateBase[] states; // state를 저장하기 위한 배열
     private State curState;     // 현재 상태

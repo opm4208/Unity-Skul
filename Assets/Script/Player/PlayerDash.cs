@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,15 +9,24 @@ public class PlayerDash : MonoBehaviour
     private Coroutine dashRoutine;
     private Coroutine dashCTRoutine;
     private Player player;
-
+    private GameObject dash_Smoke;
+    private Transform leftDashStartPoint;
+    private Transform rightDashStartPoint;
 
     private void Start()
     {
         player = GameManager.Player;
+        leftDashStartPoint = player.player.GetChild(2);
+        rightDashStartPoint = player.player.GetChild(3);
+        dash_Smoke = GameManager.Resource.Load<GameObject>("Prefab/Dash_Smoke_0");
     }
 
     IEnumerator Dash()
     {
+        if (player.rbSprite.flipX == true)
+            GameManager.Resource.Instantiate(dash_Smoke, rightDashStartPoint.position, Quaternion.Euler(0, 0, 0), null, true);
+        else
+            GameManager.Resource.Instantiate(dash_Smoke, leftDashStartPoint.position, Quaternion.Euler(0, 0, 0), null, true);
         DashStart();
         float currentTime = 0f;
         while (true)

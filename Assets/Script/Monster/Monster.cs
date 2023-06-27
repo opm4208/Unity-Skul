@@ -31,6 +31,7 @@ public class Monster : MonoBehaviour
     {
         animator.SetTrigger("Die");
         GameManager.Stage.monsterCount -= 1;
+        GameManager.Stage.StageCheck();
         Destroy(gameObject, 3f);
     }
 
@@ -48,11 +49,4 @@ public class Monster : MonoBehaviour
         hp -= damage;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            Die();
-        }
-    }
 }

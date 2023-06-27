@@ -10,19 +10,25 @@ public class HeadBall : EnemyBall
     private SpriteRenderer spriteRenderer;
     private Coroutine ballResource;
     private Transform head;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private float quaternion;
 
     private void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    private void OnEnable()
+    {
+        rb = GetComponent<Rigidbody2D>();
         GameManager.Player.head = transform;
         quaternion = 0;
+        hitCheck = false;
         rbsprite = GameManager.Player.rbSprite.flipX;
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
+        this.gameObject.layer = 0;
         ballResource = StartCoroutine(BallResource());
         if (rbsprite)
             spriteRenderer.flipX = true;
+        rb.gravityScale = 0;
     }
     protected override void Update()
     {
@@ -68,6 +74,7 @@ public class HeadBall : EnemyBall
     IEnumerator BallResource()
     {
         yield return new WaitForSeconds(6);
+        GameManager.Player.animator.SetLayerWeight(1, 0);
         GameManager.Resource.Destroy(transform.gameObject);
     }
 
@@ -79,6 +86,13 @@ public class HeadBall : EnemyBall
             collision.gameObject.GetComponent<Monster>().Hit(damage);
         }
         rb.gravityScale = 1;
-        this.gameObject.layer = 9;
+        this.gameObject.layer = 11;
+        if (collision.gameObject.tag == "Player")
+        {
+            GameManager.Player.skillA.cooltimecheck = false;
+            StopCoroutine(BallResource());
+            GameManager.Player.animator.SetLayerWeight(1, 0);
+            GameManager.Resource.Destroy(transform.gameObject);
+        }
     }
 }

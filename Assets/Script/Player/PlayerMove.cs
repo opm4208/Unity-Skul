@@ -12,6 +12,7 @@ public class PlayerMove : MonoBehaviour
     public UnityEvent OnStopDash;
     private Vector2 inputDir;
 
+
     private void Start()
     {
         player = GameManager.Player;

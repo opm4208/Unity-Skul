@@ -21,6 +21,7 @@ public class NormalSkillB : PlayerSkillAbstract
         {
             cooltimecheck = false;
             StartCoroutine(CoolTime());
+            GameManager.Player.animator.SetLayerWeight(1, 0);
             GameManager.Player.player.position = GameManager.Player.head.position;
             GameManager.Resource.Destroy(GameManager.Player.head.gameObject);
             GameManager.Player.head = null;
