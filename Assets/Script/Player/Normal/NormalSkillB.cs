@@ -7,6 +7,7 @@ public class NormalSkillB : PlayerSkillAbstract
     private void Start()
     {
         GameManager.Player.skillB = this;
+
         cooltimecheck = true;
         CoolTimeSet();
     }

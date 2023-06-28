@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: -1757345461
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1598661545, guid: 095cd8497ba9e484eabc3ed81a265bd6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5d1e551fb84a52e479767a5c1c733078, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -139,3 +139,4 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 128
+  rb: {fileID: 0}
