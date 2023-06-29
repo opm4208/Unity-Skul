@@ -6,18 +6,21 @@ using UnityEngine.UI;
 
 public class Hpbar : MonoBehaviour
 {
-    TMP_Text tmp;
-    Player player;
+    public TMP_Text tmp;
+    public Player player;
     Slider slider;
     private void Awake()
     {
         tmp = GetComponent<TMP_Text>();
-        player = GameManager.Player;
         slider = transform.gameObject.GetComponentInParent<Slider>();
+    }
+    private void Start()
+    {
+        player = GameManager.Player;
     }
     private void Update()
     {
         tmp.text = $"{player.hp} / {player.maxHp}";
-        slider.value = player.maxHp/player.hp;
+        slider.value =  player.hp/ player.maxHp;
     }
 }

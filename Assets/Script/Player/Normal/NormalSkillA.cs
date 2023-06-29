@@ -11,7 +11,7 @@ public class NormalSkillA : PlayerSkillAbstract
         head = GameManager.Resource.Load<GameObject>("Prefab/Head");
         cooltimecheck = true;
         CoolTimeSet();
-        
+        DontDestroyOnLoad(gameObject);
     }
     public override void CoolTimeSet()
     {

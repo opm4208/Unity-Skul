@@ -30,8 +30,6 @@ public class Monster : MonoBehaviour
     protected virtual void Die()
     {
         animator.SetTrigger("Die");
-        GameManager.Stage.monsterCount -= 1;
-        GameManager.Stage.StageCheck();
         Destroy(gameObject, 3f);
     }
 

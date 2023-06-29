@@ -10,7 +10,7 @@ public class PoolManager : MonoBehaviour
     Dictionary<string, ObjectPool<GameObject>> poolDic;
     Dictionary<string, Transform> poolContainer;
     Transform poolRoot;
-    Canvas canvasRoot;
+    public Canvas canvasRoot;
 
     private void Awake()
     {

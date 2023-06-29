@@ -12,6 +12,6 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
-        tmp.text = GameManager.Stage.monsterCount.ToString();
+        //tmp.text = GameManager.Stage.monsterCount.ToString();
     }
 }

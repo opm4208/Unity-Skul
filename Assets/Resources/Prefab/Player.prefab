@@ -81,7 +81,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1757345461
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: caddc7d8c1fe23a4a94f3c03c5bbdff8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -254,7 +254,10 @@ MonoBehaviour:
   animator: {fileID: 0}
   rb: {fileID: 0}
   rbSprite: {fileID: 0}
+  head: {fileID: 0}
   player: {fileID: 0}
+  skillA: {fileID: 0}
+  skillB: {fileID: 0}
 --- !u!114 &1941489432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +341,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7b8886f01cfcbb4184a2f5687a92031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  isGround: 0
-  doubleJump: 0

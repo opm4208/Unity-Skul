@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class Potal : MonoBehaviour
 {
-    private void OnTriggerStay2D(Collider2D collision)
+    Transform f;
+
+    private void Start()
     {
-        if (Input.GetKey(KeyCode.E)&&GameManager.Stage.monsterCount<1)
+        f = transform.GetChild(0);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        f.gameObject.SetActive(true);
+        if (Input.GetKey(KeyCode.E))
         {
-            GameManager.Stage.NextStage();
-            collision.gameObject.transform.position = GameManager.Stage.curStage.transform.GetChild(1).position;
+
         }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        f.gameObject.SetActive(false);
     }
 }

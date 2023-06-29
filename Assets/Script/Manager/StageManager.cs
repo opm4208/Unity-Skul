@@ -18,9 +18,9 @@ public class StageManager : MonoBehaviour
     private void Start()
     {
         stage = GameManager.Resource.Load<Stage>("Map/Stage");
-        curStage = GameManager.Resource.Instantiate(stage.stageArray[stageCount].map[0]);
-        Monster = curStage.transform.GetChild(0).gameObject;
-        monsterCount = Monster.transform.childCount;
+        //curStage = GameManager.Resource.Instantiate(stage.stageArray[stageCount].map[0]);
+        //Monster = curStage.transform.GetChild(0).gameObject;
+        //monsterCount = Monster.transform.childCount;
         doorsp[0] = GameManager.Resource.Load<Sprite>("Map/Door/CoinOpen");
         doorsp[1] = GameManager.Resource.Load<Sprite>("Map/Door/HeadOpen");
         doorsp[2] = GameManager.Resource.Load<Sprite>("Map/Door/ItemOpen");

@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    public int maxHp=20;
-    public int hp;
+    public float maxHp=20;
+    public float hp;
     public int damage;
     public float movePower;
     public float maxSpeed;
@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
         rbSprite = GetComponent<SpriteRenderer>();
         player = GetComponent<Transform>();
         GameManager.Player = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnSkillA(InputValue value)

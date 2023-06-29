@@ -11,17 +11,28 @@ public class PlayerMove : MonoBehaviour
     private Player player;
     public UnityEvent OnStopDash;
     private Vector2 inputDir;
-
+    private Rigidbody2D rb;
+    private float maxSpeed;
 
     private void Start()
     {
         player = GameManager.Player;
+        rb = GameManager.Player.rb;
+        maxSpeed = 10;
     }
 
     private void Update()
     {
         if(!player.isDash)
             Move();
+        if(rb.velocity.x>maxSpeed)
+            rb.velocity =Vector2.right* maxSpeed;
+        if(rb.velocity.x<-maxSpeed)
+            rb.velocity =Vector2.left* maxSpeed;
+        if(rb.velocity.y>maxSpeed)
+            rb.velocity =Vector2.up* maxSpeed;
+        if(rb.velocity.y<-maxSpeed)
+            rb.velocity =Vector2.down* maxSpeed;
     }
     public void Move()
     {
@@ -34,7 +45,7 @@ public class PlayerMove : MonoBehaviour
 
     public void Jump()
     {
-        player.rb.gravityScale = 1;
+        rb.gravityScale = 1;
         if (player.isDash)
         {
             OnStopDash?.Invoke();
@@ -42,14 +53,13 @@ public class PlayerMove : MonoBehaviour
         }
         if (player.isGround)
         {
-            player.rb.velocity = Vector2.up * player.jumpPower;
-            //rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            rb.velocity = Vector2.up * player.jumpPower;
             player.animator.SetTrigger("Jump");
         }
         else
         {
             player.animator.SetTrigger("Jump");
-            player.rb.velocity = Vector2.up * player.jumpPower;
+            rb.velocity = Vector2.up * player.jumpPower;
             player.doubleJump = false;
         }
     }
