@@ -13,12 +13,10 @@ public class HeadBall : EnemyBall
     public Rigidbody2D rb;
     private float quaternion;
 
-    private void Start()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+
     private void OnEnable()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         GameManager.Player.head = transform;
         quaternion = 0;

@@ -13,12 +13,16 @@ public class PlayerMove : MonoBehaviour
     private Vector2 inputDir;
     private Rigidbody2D rb;
     private float maxSpeed;
+    private GameObject doubleJumpSmoke;
+    private GameObject groundCheck;
 
     private void Start()
     {
         player = GameManager.Player;
         rb = GameManager.Player.rb;
         maxSpeed = 10;
+        doubleJumpSmoke = GameManager.Resource.Load<GameObject>("Prefab/DoubleJump_Smoke_0");
+        groundCheck = transform.GetChild(0).gameObject;
     }
 
     private void Update()
@@ -60,6 +64,7 @@ public class PlayerMove : MonoBehaviour
         {
             player.animator.SetTrigger("Jump");
             rb.velocity = Vector2.up * player.jumpPower;
+            GameManager.Resource.Instantiate(doubleJumpSmoke, groundCheck.transform.position, Quaternion.Euler(0, 0, 0), null, true);
             player.doubleJump = false;
         }
     }

@@ -5,10 +5,15 @@ using UnityEngine;
 public class Potal : MonoBehaviour
 {
     Transform f;
+    SpriteRenderer spriteRenderer;
+    SpriteRenderer changeSprite;
 
     private void Start()
     {
         f = transform.GetChild(0);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        changeSprite = transform.GetChild (1).GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = changeSprite.sprite;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

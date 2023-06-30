@@ -26,4 +26,8 @@ public class Slam : MonoBehaviour
             yield return null;
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+    }
 }
