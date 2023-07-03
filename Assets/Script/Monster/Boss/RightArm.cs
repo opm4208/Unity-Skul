@@ -8,6 +8,6 @@ public class RightArm : Arm
     {
         base.Start();
         stampPosition = elderEnt.R_StampPosition;
-        stampReady = StartCoroutine(StampReady());
+        position = elderEnt.rightReposition;
     }
 }
