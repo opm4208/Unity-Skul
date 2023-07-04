@@ -36,13 +36,13 @@ public class StandingWood : StandingMonster
         states[(int)State.MeleeAttack] = new MeleeAttackState(this);
         states[(int)State.RangeAttack] = new RangeAttackState(this);
         anim = GetComponent<Animator>();
-
-        meleeRangeCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
-        attackRangeCollider = transform.GetChild(1).GetComponent<CircleCollider2D>();
-        ballTransform = transform.GetChild(2).GetComponent<Transform>();
     }
     private void Start()
     {
+        meleeRangeCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
+        attackRangeCollider = transform.GetChild(1).GetComponent<CircleCollider2D>();
+        ballTransform = transform.GetChild(2).GetComponent<Transform>();
+
         curState = State.Idle;
         states[(int)curState].Enter();
         attackRangeCollider.radius = attackRange;
@@ -85,12 +85,6 @@ public class StandingWood : StandingMonster
                 collider.gameObject.GetComponent<PlayerAttack>().Hit(damage);
             }
         }
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(meleeRangeCollider.transform.position, meleeRange);
-
     }
     public void ChangeState(State state)
     {

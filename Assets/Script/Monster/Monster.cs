@@ -15,7 +15,7 @@ public class Monster : MonoBehaviour
     protected Animator animator;
     protected new Collider2D collider;
 
-    public int MaxHp { get { return maxHp; } }
+    public int MaxHp { get { return maxHp; } set { maxHp = value; } }
     public int Hp { get { return hp;} set { hp -= value; } }
 
 
@@ -29,7 +29,7 @@ public class Monster : MonoBehaviour
 
     protected virtual void Die()
     {
-        animator.SetTrigger("Die");
+        //animator.SetTrigger("Die");
         Destroy(gameObject, 3f);
     }
 
@@ -45,6 +45,9 @@ public class Monster : MonoBehaviour
     public virtual void Hit(int damage)
     {
         hp -= damage;
+        if(hp<1)
+            Die();
+        Debug.Log(hp);
     }
 
 }

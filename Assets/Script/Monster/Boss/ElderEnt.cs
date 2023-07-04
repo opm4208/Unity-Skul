@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ElderEnt : MonoBehaviour
+public class ElderEnt : Monster
 {
-    public Animator animator;
+    public new Animator animator;
     public Transform l_StampPosition;
     public Transform R_StampPosition;
+    public Transform ChargingPosition;
     public LeftArm leftArm;
     public RightArm rightArm;
     public Vector3 leftReposition;
     public Vector3 rightReposition;
     public int stampCount=0;
     public int attackPattern;
+    protected int pattern = 1;
 
-    public bool alone;
+    protected bool change = false;
+    public bool right; //오른손 왼손 구별
 
-    private void Awake()
+    private new void Awake()
     {
         animator = GetComponent<Animator>();
         l_StampPosition = transform.GetChild(6);
@@ -26,15 +29,13 @@ public class ElderEnt : MonoBehaviour
         rightArm = transform.GetChild(4).GetChild(0).GetComponent<RightArm>();
         leftReposition = transform.GetChild(3).GetChild(0).position;
         rightReposition = transform.GetChild(4).GetChild(0).position;
+        ChargingPosition = transform.GetChild(1).GetChild(0).transform;
     }
     private void Start()
     {
         animator.SetTrigger("Ready");
-    }
-
-    public void ReadyFalse()
-    {
-        animator.SetBool("Ready", false);
+        maxHp = 50;
+        hp = maxHp;
     }
 
     private bool Decision()
@@ -44,32 +45,46 @@ public class ElderEnt : MonoBehaviour
     }
     public void Stamp()
     {
+        rightArm.ReadyStop();
+        leftArm.ReadyStop();
         if (stampCount > 1)
         {
-            leftArm.StampReposition();
             rightArm.StampReposition();
+            leftArm.StampReposition();
         }
         else
         {
-            if (!alone)
+            if (Decision())
             {
-                alone = true;
-                if (Decision())
-                {
-                    rightArm.StampStart();
-                }
-                else
-                {
-                    leftArm.StampStart();
-                }
+                rightArm.StampStart();
+                right = true;
+            }
+            else
+            {
+                leftArm.StampStart();
+                right = false;
             }
         }
     }
-    private void SetHandAnimator(Transform trans)
+    public void StampReady()
     {
-        Animator animator = trans.GetComponent<Animator>();
+        if(right)
+            rightArm.StampReadyStart();
+        else
+            leftArm.StampReadyStart();
     }
-    public void AttackPattern(int attackPattern)
+    public void StartReady()
+    {
+        animator.SetBool("Slam", false);
+        animator.SetBool("Ready", true);
+    }
+    public void SlamStop()
+    {
+        animator.SetBool("Slam", false);
+        rightArm.animator.SetBool("Slam", false);
+        leftArm.animator.SetBool("Slam", false);
+    }
+    public void AttackPattern()
     {
         // stamp 패턴
         if(attackPattern==0)
@@ -81,7 +96,10 @@ public class ElderEnt : MonoBehaviour
         // slam 패턴
         if(attackPattern==1)
         {
-
+            Debug.Log("sds");
+            animator.SetBool("Slam",true);
+            rightArm.animator.SetBool("Slam", true);
+            leftArm.animator.SetBool("Slam",true );
         }
         // energy 패턴
         if(attackPattern==2)
@@ -89,7 +107,19 @@ public class ElderEnt : MonoBehaviour
 
         }
         attackPattern++;
-        if (attackPattern > 2)
+        if (attackPattern > pattern)
             attackPattern = 0;
+    }
+    protected override void Die()
+    {
+        // 1페이즈
+        if (!change)
+        {
+            
+        }
+    }
+    public override void Hit(int damage)
+    {
+        base.Hit(damage);
     }
 }

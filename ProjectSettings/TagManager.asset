@@ -24,7 +24,7 @@ TagManager:
   - Head
   - MiniMap
   - Hand
-  - 
+  - BackGround
   - 
   - 
   - 
@@ -51,4 +51,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2537621835
+    locked: 0
+  - name: Ui
+    uniqueID: 618536155
     locked: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class Potal : MonoBehaviour
 {
@@ -18,9 +19,13 @@ public class Potal : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         f.gameObject.SetActive(true);
-        if (Input.GetKey(KeyCode.E))
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (Input.GetKey(KeyCode.F))
         {
-
+            GameManager.PortalManager.stageCount++;
+            UnitySceneManager.LoadScene(GameManager.PortalManager.stageCount);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

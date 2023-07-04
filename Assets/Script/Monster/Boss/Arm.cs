@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Arm : MonoBehaviour
@@ -8,10 +9,12 @@ public class Arm : MonoBehaviour
     protected Transform stampPosition;
     protected Coroutine stampReady;
     protected Coroutine stamp;
+    protected Coroutine reposition;
     protected BoxCollider2D boxCollider;
-    protected Animator animator;
+    public Animator animator;
     protected Vector3 position; 
     protected int damage = 3;
+    public bool right; // 왼손 오른손 구분
     protected void Start()
     {
         elderEnt = transform.parent.parent.GetComponent<ElderEnt>();
@@ -23,41 +26,45 @@ public class Arm : MonoBehaviour
     {
         while (true)
         {
-            transform.Translate((stampPosition.position - transform.position).normalized * 7 * Time.deltaTime);
+            transform.Translate((stampPosition.position - transform.position).normalized * 10 * Time.deltaTime);
             if ((stampPosition.position.y - transform.position.y) < 0.01f)
             {
-                Debug.Log("StampReady");
                 elderEnt.Stamp();
-                StopCoroutine(stampReady);
             }
             yield return null;
         }
     }
-
+    public void ReadyStop()
+    {
+        StopCoroutine(stampReady);
+    }
     protected IEnumerator Stamp()
     {
         boxCollider.enabled = true;
-        Vector3 player = new Vector3(GameManager.Player.transform.position.x, GameManager.Player.transform.position.y - 1);
+        Vector3 player = new Vector3(GameManager.Player.transform.position.x, GameManager.Player.transform.position.y - 10);
         while (true)
         {
-            Debug.Log("Stamp");
-            transform.Translate((player - transform.position).normalized * 10 * Time.deltaTime);
+            transform.Translate((player - transform.position).normalized * 13 * Time.deltaTime);
             yield return null;
         }
     }
     public void StampReposition()
     {
-        while(true)
+        reposition = StartCoroutine(Reposition());
+    }
+    IEnumerator Reposition()
+    {
+        while (true)
         {
-            Debug.Log("StampReposition");
-            transform.Translate((position - transform.position).normalized * 3 * Time.deltaTime);
-            if ((position.y - transform.position.y)+ (position.x - transform.position.x) < 0.01f)
+            transform.Translate((position - transform.position).normalized *5 * Time.deltaTime);
+            if (math.abs(position.y - transform.position.y) < 0.01f)
             {
-                Debug.Log("true");
-                //elderEnt.animator.SetTrigger("Ready");
+                if(right)
+                    elderEnt.animator.SetTrigger("Ready");
                 animator.SetBool("Stamp", false);
-                break;
+                StopCoroutine(reposition);
             }
+            yield return null;
         }
     }
     public void StampReadyStart()
@@ -79,8 +86,7 @@ public class Arm : MonoBehaviour
         {
             elderEnt.stampCount++;
             boxCollider.enabled = false;
-            elderEnt.alone = false;
-            StampReadyStart();
+            elderEnt.StampReady();
             StopCoroutine(stamp);
         }
     }

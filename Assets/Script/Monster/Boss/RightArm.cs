@@ -9,5 +9,6 @@ public class RightArm : Arm
         base.Start();
         stampPosition = elderEnt.R_StampPosition;
         position = elderEnt.rightReposition;
+        right = true;
     }
 }
