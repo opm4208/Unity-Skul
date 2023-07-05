@@ -29,7 +29,7 @@ public class Monster : MonoBehaviour
 
     protected virtual void Die()
     {
-        //animator.SetTrigger("Die");
+        animator.SetTrigger("Die");
         Destroy(gameObject, 3f);
     }
 

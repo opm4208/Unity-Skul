@@ -7,15 +7,27 @@ public class PlayerAttack : MonoBehaviour
 {
  
     private Player player;
-
+    private bool invincibility;
     private void Start()
     {
         player = GameManager.Player;
     }
     public void Hit(int damage)
     {
-        player.hp -= damage;
-        Debug.Log(player.hp);
+        if (!invincibility)
+        {
+            player.rbSprite.color = new Color(1, 1, 1, 0.5f);
+            invincibility = true;
+            player.hp -= damage;
+            StartCoroutine(Invincibility());
+            Debug.Log(player.hp);
+        }
+    }
+    IEnumerator Invincibility()
+    {
+        yield return new WaitForSeconds(0.5f);
+        player.rbSprite.color = new Color(1, 1, 1, 1);
+        invincibility = false;
     }
     private void Attack()
     {

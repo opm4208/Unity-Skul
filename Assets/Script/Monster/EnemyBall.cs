@@ -11,6 +11,4 @@ public class EnemyBall : MonoBehaviour
     {
         transform.Translate(Vector2.right*1*Time.deltaTime);
     }
-
-    
 }

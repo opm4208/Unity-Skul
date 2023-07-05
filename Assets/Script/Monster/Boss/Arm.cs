@@ -26,7 +26,7 @@ public class Arm : MonoBehaviour
     {
         while (true)
         {
-            transform.Translate((stampPosition.position - transform.position).normalized * 10 * Time.deltaTime);
+            transform.Translate((stampPosition.position - transform.position).normalized * 8 * Time.deltaTime);
             if ((stampPosition.position.y - transform.position.y) < 0.01f)
             {
                 elderEnt.Stamp();
@@ -44,7 +44,7 @@ public class Arm : MonoBehaviour
         Vector3 player = new Vector3(GameManager.Player.transform.position.x, GameManager.Player.transform.position.y - 10);
         while (true)
         {
-            transform.Translate((player - transform.position).normalized * 13 * Time.deltaTime);
+            transform.Translate((player - transform.position).normalized * 10 * Time.deltaTime);
             yield return null;
         }
     }

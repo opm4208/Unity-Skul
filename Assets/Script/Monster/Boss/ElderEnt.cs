@@ -9,6 +9,9 @@ public class ElderEnt : Monster
     public Transform l_StampPosition;
     public Transform R_StampPosition;
     public Transform ChargingPosition;
+    public Transform SparkPosition;
+    public Transform HpUi;
+    public Transform HpChUi;
     public LeftArm leftArm;
     public RightArm rightArm;
     public Vector3 leftReposition;
@@ -16,6 +19,7 @@ public class ElderEnt : Monster
     public int stampCount=0;
     public int attackPattern;
     protected int pattern = 1;
+    public GameObject ElderCh;
 
     protected bool change = false;
     public bool right; //오른손 왼손 구별
@@ -30,14 +34,28 @@ public class ElderEnt : Monster
         leftReposition = transform.GetChild(3).GetChild(0).position;
         rightReposition = transform.GetChild(4).GetChild(0).position;
         ChargingPosition = transform.GetChild(1).GetChild(0).transform;
+        SparkPosition = transform.GetChild(1).GetChild(1).transform;
     }
     private void Start()
     {
         animator.SetTrigger("Ready");
         maxHp = 50;
         hp = maxHp;
+        //attackPattern = 2;
     }
-
+    public void SparkSetactive()
+    {
+        SparkPosition.gameObject.SetActive(true);
+    }
+    IEnumerator EnergyEnd()
+    {
+        yield return new WaitForSeconds(15);
+        SparkPosition.gameObject.SetActive(false);
+        animator.SetBool("Energy", false);
+        leftArm.animator.SetBool("Energy", false);
+        rightArm.animator.SetBool("Energy", false);
+        animator.SetTrigger("Ready");
+    }
     private bool Decision()
     {
         // 플레이어의 위치가 기준보다 오른쪽이면 true 아니면 false
@@ -49,11 +67,13 @@ public class ElderEnt : Monster
         leftArm.ReadyStop();
         if (stampCount > 1)
         {
+            animator.SetBool("StampReady", false);
             rightArm.StampReposition();
             leftArm.StampReposition();
         }
         else
         {
+            animator.SetBool("Stamp", true);
             if (Decision())
             {
                 rightArm.StampStart();
@@ -68,7 +88,8 @@ public class ElderEnt : Monster
     }
     public void StampReady()
     {
-        if(right)
+        animator.SetBool("Stamp", false);
+        if (right)
             rightArm.StampReadyStart();
         else
             leftArm.StampReadyStart();
@@ -89,6 +110,7 @@ public class ElderEnt : Monster
         // stamp 패턴
         if(attackPattern==0)
         {
+            animator.SetBool("StampReady", true);
             stampCount = 0;
             leftArm.StampReadyStart();
             rightArm.StampReadyStart();
@@ -96,7 +118,6 @@ public class ElderEnt : Monster
         // slam 패턴
         if(attackPattern==1)
         {
-            Debug.Log("sds");
             animator.SetBool("Slam",true);
             rightArm.animator.SetBool("Slam", true);
             leftArm.animator.SetBool("Slam",true );
@@ -104,7 +125,11 @@ public class ElderEnt : Monster
         // energy 패턴
         if(attackPattern==2)
         {
-
+            StartCoroutine(EnergyEnd());
+            animator.SetBool("Energy", true);
+            leftArm.animator.SetBool("Energy", true);
+            rightArm.animator.SetBool("Energy", true);
+            ChargingPosition.gameObject.SetActive(true);
         }
         attackPattern++;
         if (attackPattern > pattern)
@@ -115,7 +140,14 @@ public class ElderEnt : Monster
         // 1페이즈
         if (!change)
         {
-            
+            HpUi.gameObject.SetActive(false);
+            ElderCh.gameObject.SetActive(true);
+            HpChUi.gameObject.SetActive(true);
+            gameObject.SetActive(false);
+        }
+        else
+        {
+
         }
     }
     public override void Hit(int damage)
