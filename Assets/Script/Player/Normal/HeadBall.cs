@@ -34,7 +34,7 @@ public class HeadBall : EnemyBall
         {
             if (rbsprite)
             {
-                transform.Translate(Vector2.left * 3 * Time.deltaTime, Space.World);
+                transform.Translate(Vector2.left * 6 * Time.deltaTime, Space.World);
                 if (quaternion >= 360)
                     quaternion = 0;
                 transform.rotation = Quaternion.Euler(0f, 0f, quaternion);
@@ -42,7 +42,7 @@ public class HeadBall : EnemyBall
             }
             else
             {
-                transform.Translate(Vector2.right * 3 * Time.deltaTime, Space.World);
+                transform.Translate(Vector2.right * 6 * Time.deltaTime, Space.World);
                 if (quaternion <= -360)
                     quaternion = 0;
                 transform.rotation = Quaternion.Euler(0f, 0f, quaternion);

@@ -33,7 +33,12 @@ public class Player : MonoBehaviour
     public Transform player;
     public PlayerSkillAbstract skillA;
     public PlayerSkillAbstract skillB;
-    
+
+    public AudioSource jump;
+    public AudioSource jumpAttack;
+    public AudioSource hit;
+    public AudioSource attack1;
+    public AudioSource attack2;
     private void Awake()
     {
 

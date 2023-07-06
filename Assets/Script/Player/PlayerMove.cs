@@ -57,6 +57,7 @@ public class PlayerMove : MonoBehaviour
         }
         if (player.isGround)
         {
+            player.jump.Play();
             rb.velocity = Vector2.up * player.jumpPower;
             player.animator.SetTrigger("Jump");
         }

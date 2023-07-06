@@ -20,6 +20,7 @@ public class ElderEnt : Monster
     public int attackPattern;
     protected int pattern = 1;
     public GameObject ElderCh;
+    public HpChanger hpChanger;
 
     protected bool change = false;
     public bool right; //오른손 왼손 구별
@@ -42,6 +43,13 @@ public class ElderEnt : Monster
         maxHp = 50;
         hp = maxHp;
         //attackPattern = 2;
+    }
+    public void StopAnimator()
+    {
+        animator.SetBool("Salm", false);
+        animator.SetBool("Stamp", false);
+        animator.SetBool("StampReposition", false);
+        animator.SetBool("Energy", false);
     }
     public void SparkSetactive()
     {
@@ -140,14 +148,19 @@ public class ElderEnt : Monster
         // 1페이즈
         if (!change)
         {
-            HpUi.gameObject.SetActive(false);
+            //HpUi.gameObject.SetActive(false);
             ElderCh.gameObject.SetActive(true);
-            HpChUi.gameObject.SetActive(true);
+            hpChanger.monster = ElderCh.GetComponent<Monster>();
             gameObject.SetActive(false);
         }
         else
         {
-
+            StopAnimator();
+            animator.SetBool("Die", true);
+            leftArm.animator.SetBool("Energy", true);
+            rightArm.animator.SetBool("Energy", true);
+            ElderCh.SetActive(false);
+            //Destroy(gameObject, 3f);
         }
     }
     public override void Hit(int damage)

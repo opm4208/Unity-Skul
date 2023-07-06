@@ -8,14 +8,17 @@ public class PlayerAttack : MonoBehaviour
  
     private Player player;
     private bool invincibility;
+    private GameObject hitImpact;
     private void Start()
     {
         player = GameManager.Player;
+        hitImpact = GameManager.Resource.Load<GameObject>("Prefab/Hit_Skul");
     }
     public void Hit(int damage)
     {
         if (!invincibility)
         {
+            player.hit.Play();
             player.rbSprite.color = new Color(1, 1, 1, 0.5f);
             invincibility = true;
             player.hp -= damage;
@@ -33,6 +36,12 @@ public class PlayerAttack : MonoBehaviour
     {
         if (!player.attackCT)
         {
+            if(!player.isGround)
+                player.jumpAttack.Play();
+            else if(player.attackCombo==1)
+                player.attack1.Play();
+            else if(player.attackCombo==2)
+                player.attack2.Play();
             if (player.attackCombo > 1)
                 player.attackCombo = 0;
             player.attackCombo++;
@@ -61,6 +70,7 @@ public class PlayerAttack : MonoBehaviour
                 if (player.monsterMask.IsContain(collider.gameObject.layer))
                 {
                     collider.gameObject.GetComponent<Monster>().Hit(player.damage);
+                    GameManager.Resource.Instantiate(hitImpact, new Vector2(0.5f + collider.transform.position.x, collider.transform.position.y), Quaternion.Euler(0, 0, 0), null, true);
                 }
             }
         }
@@ -74,6 +84,7 @@ public class PlayerAttack : MonoBehaviour
                 if (player.monsterMask.IsContain(collider.gameObject.layer))
                 {
                     collider.gameObject.GetComponent<Monster>().Hit(player.damage);
+                    GameManager.Resource.Instantiate(hitImpact,new Vector2(-0.5f+collider.transform.position.x,collider.transform.position.y), Quaternion.Euler(0, 0, 180), null, true);
                 }
             }
         }

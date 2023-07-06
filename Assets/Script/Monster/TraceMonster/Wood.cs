@@ -27,6 +27,11 @@ public class Wood : TraceMonster
     public bool hitCheck;
     public bool die;
 
+    public AudioSource hit;
+    public AudioSource attack;
+    public AudioSource attackReady;
+    public AudioSource dieSound;
+
     protected override void Awake()
     {
         base.Awake();
@@ -63,7 +68,8 @@ public class Wood : TraceMonster
 
     private void Update()
     {
-        states[(int)curState].Update();
+        if(!die&&!hitCheck)
+            states[(int)curState].Update();
     }
 
     public void ChangeState(State state)
@@ -73,13 +79,6 @@ public class Wood : TraceMonster
         states[(int)curState].Enter();
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, traceRange);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.GetChild(1).position, attackRange);
-    }
     IEnumerator AttackCoolTime()
     {
         yield return new WaitForSeconds(coolTime);
@@ -90,6 +89,7 @@ public class Wood : TraceMonster
     {
         if (!attackCool)
         {
+            attackReady.Play();
             attackCool = true;
             anim.SetTrigger("Attack");
             StartCoroutine(AttackCoolTime());
@@ -97,6 +97,7 @@ public class Wood : TraceMonster
     }
     public void AttackRange()
     {
+        attack.Play();
         if (right)
         {
             Vector2 attackPosition = new Vector2(transform.position.x + 1, transform.position.y);
@@ -130,6 +131,7 @@ public class Wood : TraceMonster
         {
             if (hitCheck)
                 StopCoroutine(hitRoutine);
+            hit.Play();
             anim.SetBool("IsHit", true);
             hitCheck = true;
             hitRoutine = StartCoroutine(HitRoutine());
@@ -147,6 +149,10 @@ public class Wood : TraceMonster
     protected override void Die()
     {
         base.Die();
+        dieSound.Play();
+        GameManager.PortalManager.monsterCount--;
+        transform.gameObject.GetComponentInParent<MonsterCountSet>().MonsterCheck();
+        animator.SetTrigger("Die");
         transform.GetChild(0).gameObject.SetActive(false);
         transform.GetChild(1).gameObject.SetActive(false);
         die= true;

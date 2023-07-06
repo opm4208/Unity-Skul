@@ -10,6 +10,7 @@ public class Monster : MonoBehaviour
     protected int damage;
     protected float attackRange;
     protected int coolTime;
+    protected bool die;
 
     protected new Rigidbody2D rigidbody;
     protected Animator animator;
@@ -29,8 +30,9 @@ public class Monster : MonoBehaviour
 
     protected virtual void Die()
     {
-        animator.SetTrigger("Die");
-        Destroy(gameObject, 3f);
+        //animator.SetTrigger("Die");
+        die = true;
+        Destroy(gameObject, 1f);
     }
 
     private void SetLayersRecursively(Transform trans)
@@ -44,10 +46,13 @@ public class Monster : MonoBehaviour
 
     public virtual void Hit(int damage)
     {
-        hp -= damage;
-        if(hp<1)
-            Die();
-        Debug.Log(hp);
+        if (!die)
+        {
+            hp -= damage;
+            if (hp < 1)
+                Die();
+            Debug.Log(hp);
+        }
     }
 
 }

@@ -15,8 +15,15 @@ public class StandingWood : StandingMonster
     private CircleCollider2D attackRangeCollider;
     private BoxCollider2D meleeRangeCollider;
     private GameObject standingWoodBall;
+    private GameObject standingStamp;
     private Transform ballTransform;
     private Vector2 meleeRange;
+    private bool die;
+
+    public AudioSource hit;
+    public AudioSource meleeAttackReady;
+    public AudioSource dieSound;
+    public AudioSource rangeAttack;
 
     private bool isAttack;
     protected override void Awake()
@@ -24,6 +31,7 @@ public class StandingWood : StandingMonster
         base.Awake();
         data = GameManager.Resource.Load<StandingMonsterData>("Data/StandingWood");
         standingWoodBall = GameManager.Resource.Load<GameObject>("Prefab/StandingWoodBall");
+        standingStamp = GameManager.Resource.Load<GameObject>("Prefab/Monster/GiganticEnt_Stamp");
 
         maxHp = data.StandingMonsters[0].maxHp;
         hp = maxHp;
@@ -50,16 +58,21 @@ public class StandingWood : StandingMonster
     }
     private void Update()
     {
-        states[(int)curState].Update();
-        if (hp < 0)
-            Die();
+        if(!die)
+            states[(int)curState].Update();
     }
     public void Attack()
     {
         if (curState == State.RangeAttack)
+        {
             anim.SetTrigger("Attack");
+            rangeAttack.Play();
+        }
         else
+        {
             anim.SetTrigger("Attack_Melee");
+            meleeAttackReady.Play();
+        }
         isAttack = true;
         StartCoroutine(AttackCheck());
     }
@@ -67,6 +80,20 @@ public class StandingWood : StandingMonster
     {
         yield return new WaitForSeconds(coolTime);
         isAttack = false;
+    }
+    public override void Hit(int damage)
+    {
+        base.Hit(damage);
+        hit.Play();
+    }
+    protected override void Die()
+    {
+        die = true;
+        dieSound.Play();
+        GameManager.PortalManager.monsterCount--;
+        transform.gameObject.GetComponentInParent<MonsterCountSet>().MonsterCheck();
+        animator.SetBool("Die",true);
+        base.Die();
     }
     public void RangeAttack()
     {
@@ -78,6 +105,7 @@ public class StandingWood : StandingMonster
     public void MeleeAttack()
     {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(meleeRangeCollider.transform.position , meleeRange, 0);
+        GameManager.Resource.Instantiate(standingStamp, meleeRangeCollider.transform.position, Quaternion.Euler(0, 0, 0), null, true);
         foreach (Collider2D collider in colliders)
         {
             if (playerMask.IsContain(collider.gameObject.layer))

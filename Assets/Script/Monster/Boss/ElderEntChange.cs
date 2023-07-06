@@ -9,4 +9,8 @@ public class ElderEntChange : ElderEnt
         pattern = 2;
         change = true;
     }
+    public Monster This()
+    {
+        return this;
+    }
 }

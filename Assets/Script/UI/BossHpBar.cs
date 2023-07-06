@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BossHpBar : MonoBehaviour
 {
-    public Monster boss;
+    public HpChanger boss;
     Slider hpbar;
 
     private void Awake()
@@ -14,6 +14,6 @@ public class BossHpBar : MonoBehaviour
     }
     private void Update()
     {
-        hpbar.value = (float)boss.Hp / (float)boss.MaxHp;
+        hpbar.value = (float)boss.hp / (float)boss.maxHp;
     }
 }

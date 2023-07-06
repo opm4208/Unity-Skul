@@ -8,6 +8,7 @@ public class Potal : MonoBehaviour
     Transform f;
     SpriteRenderer spriteRenderer;
     SpriteRenderer changeSprite;
+    bool trigger;
 
     private void Start()
     {
@@ -22,8 +23,10 @@ public class Potal : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKey(KeyCode.F)&&!trigger)
         {
+            GameManager.Pool.canvasRoot.GetComponent<UiControler>().MinimapSeton();
+            trigger = true;
             GameManager.PortalManager.stageCount++;
             UnitySceneManager.LoadScene(GameManager.PortalManager.stageCount);
         }

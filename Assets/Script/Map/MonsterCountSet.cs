@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class MonsterCountSet : MonoBehaviour
 {
-    void Start()
+    public Transform portal;
+    private void Awake()
     {
         GameManager.PortalManager.monsterCount = transform.childCount;
+    }
+    public void MonsterCheck()
+    {
+        if(GameManager.PortalManager.monsterCount == 0)
+            portal.gameObject.GetComponent<MonsterCount>().MonsterCountGet();
     }
 }
