@@ -21,12 +21,16 @@ public class Player : MonoBehaviour
     public bool isGround;
     public bool doubleJump;
 
+    public int dashJumpPower;
     public float dashPower;
     public bool isDash;
     public bool dashCoolTime;
     public int dashCount;
 
+    public bool Woolf;
+
     public Animator animator;
+    public Animator animator2;
     public Rigidbody2D rb;
     public SpriteRenderer rbSprite;
     public Transform head;  // 리틀본 스킬 A를 위한 변수
@@ -44,11 +48,12 @@ public class Player : MonoBehaviour
 
         hp = maxHp;
         damage = 10;
-        dashPower = 3;
+        dashPower = 10; // wolf=15;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         rbSprite = GetComponent<SpriteRenderer>();
         player = GetComponent<Transform>();
+        dashJumpPower = 0; // wolf=20;
         GameManager.Player = this;
         DontDestroyOnLoad(gameObject);
     }

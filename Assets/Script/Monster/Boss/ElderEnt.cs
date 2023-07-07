@@ -16,11 +16,22 @@ public class ElderEnt : Monster
     public RightArm rightArm;
     public Vector3 leftReposition;
     public Vector3 rightReposition;
-    public int stampCount=0;
+    public int stampCount = 0;
     public int attackPattern;
     protected int pattern = 1;
     public GameObject ElderCh;
     public HpChanger hpChanger;
+
+    public AudioSource roarChanger;
+    public AudioSource sweepingRoar;
+    public AudioSource sweepingReady;
+    public AudioSource sweeping;
+    public AudioSource slamRoar;
+    public AudioSource dead;
+    public AudioSource down;
+
+    public GameObject bossBGM;
+    public GameObject panel;
 
     protected bool change = false;
     public bool right; //오른손 왼손 구별
@@ -67,7 +78,7 @@ public class ElderEnt : Monster
     private bool Decision()
     {
         // 플레이어의 위치가 기준보다 오른쪽이면 true 아니면 false
-        return transform.position.x- GameManager.Player.player.position.x<0 ? true : false; 
+        return transform.position.x - GameManager.Player.player.position.x < 0 ? true : false;
     }
     public void Stamp()
     {
@@ -81,6 +92,7 @@ public class ElderEnt : Monster
         }
         else
         {
+            slamRoar.Play();
             animator.SetBool("Stamp", true);
             if (Decision())
             {
@@ -107,6 +119,10 @@ public class ElderEnt : Monster
         animator.SetBool("Slam", false);
         animator.SetBool("Ready", true);
     }
+    public void Sweeping()
+    {
+        sweeping.Play();
+    }
     public void SlamStop()
     {
         animator.SetBool("Slam", false);
@@ -126,9 +142,11 @@ public class ElderEnt : Monster
         // slam 패턴
         if(attackPattern==1)
         {
+            sweepingRoar.Play();
             animator.SetBool("Slam",true);
             rightArm.animator.SetBool("Slam", true);
             leftArm.animator.SetBool("Slam",true );
+            sweepingReady.Play();
         }
         // energy 패턴
         if(attackPattern==2)
@@ -148,18 +166,23 @@ public class ElderEnt : Monster
         // 1페이즈
         if (!change)
         {
-            //HpUi.gameObject.SetActive(false);
+            panel.gameObject.SetActive(true);
+            HpUi.gameObject.SetActive(false);
+            roarChanger.Play();
             ElderCh.gameObject.SetActive(true);
             hpChanger.monster = ElderCh.GetComponent<Monster>();
             gameObject.SetActive(false);
         }
         else
         {
+            dead.Play();
             StopAnimator();
             animator.SetBool("Die", true);
             leftArm.animator.SetBool("Energy", true);
             rightArm.animator.SetBool("Energy", true);
             ElderCh.SetActive(false);
+            down.Play();
+            bossBGM.SetActive(false);
             //Destroy(gameObject, 3f);
         }
     }

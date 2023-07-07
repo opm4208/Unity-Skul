@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,6 +13,7 @@ public class PlayerDash : MonoBehaviour
     private GameObject dash_Smoke;
     private Transform leftDashStartPoint;
     private Transform rightDashStartPoint;
+    private bool dashjump;
 
     private void Start()
     {
@@ -32,15 +34,25 @@ public class PlayerDash : MonoBehaviour
         while (true)
         {
             currentTime += Time.deltaTime;
-            if (currentTime >= 0.5f)
+            if (currentTime >= 0.2f)
             {
                 player.dashCoolTime = true;
                 break;
             }
+            if(currentTime>=0.1f)
+                dashjump = true;
             if (player.rbSprite.flipX)
+            {
                 transform.Translate(Vector2.left * player.dashPower * Time.deltaTime);
+            }
             else
+            {
                 transform.Translate(Vector2.right * player.dashPower * Time.deltaTime);
+            }
+            if (!dashjump)
+            {
+                player.rb.AddForce(new Vector2(0, player.dashJumpPower) * Time.deltaTime, ForceMode2D.Impulse);
+            }
             yield return null;
         }
         DashEnd();
@@ -67,6 +79,7 @@ public class PlayerDash : MonoBehaviour
     }
     private void DashEnd()
     {
+        dashjump = false;
         player.rb.gravityScale = 1;
         player.isDash = false;
     }

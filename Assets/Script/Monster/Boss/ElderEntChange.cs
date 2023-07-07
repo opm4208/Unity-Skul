@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ElderEntChange : ElderEnt
 {
+    
+
     private void OnEnable()
     {
         pattern = 2;

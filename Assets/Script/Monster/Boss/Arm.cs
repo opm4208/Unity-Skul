@@ -15,6 +15,9 @@ public class Arm : MonoBehaviour
     protected Vector3 position; 
     protected int damage = 3;
     public bool right; // 왼손 오른손 구분
+
+    public AudioSource slam;
+    public AudioSource slamRecovery;
     protected void Start()
     {
         elderEnt = transform.parent.parent.GetComponent<ElderEnt>();
@@ -24,6 +27,7 @@ public class Arm : MonoBehaviour
 
     protected IEnumerator StampReady()
     {
+        slamRecovery.Play();
         while (true)
         {
             transform.Translate((stampPosition.position - transform.position).normalized * 8 * Time.deltaTime);
@@ -41,7 +45,7 @@ public class Arm : MonoBehaviour
     protected IEnumerator Stamp()
     {
         boxCollider.enabled = true;
-        Vector3 player = new Vector3(GameManager.Player.transform.position.x, GameManager.Player.transform.position.y - 10);
+        Vector3 player = new Vector3(GameManager.Player.transform.position.x, GameManager.Player.transform.position.y - 3);
         while (true)
         {
             transform.Translate((player - transform.position).normalized * 10 * Time.deltaTime);
@@ -84,6 +88,7 @@ public class Arm : MonoBehaviour
         }
         if (collision.gameObject.tag == "Ground")
         {
+            slam.Play();
             elderEnt.stampCount++;
             boxCollider.enabled = false;
             elderEnt.StampReady();

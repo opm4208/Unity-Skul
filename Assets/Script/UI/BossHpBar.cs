@@ -14,6 +14,7 @@ public class BossHpBar : MonoBehaviour
     }
     private void Update()
     {
-        hpbar.value = (float)boss.hp / (float)boss.maxHp;
+        if (boss.maxHp != 0)
+            hpbar.value = (float)boss.hp / (float)boss.maxHp;
     }
 }
