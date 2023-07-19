@@ -20,7 +20,6 @@ public class NormalSkillA : PlayerSkillAbstract
 
     public override void Skill()
     {
-        Debug.Log("ds");
         cooltimecheck = false;
         StartCoroutine(CoolTime());
         GameManager.Player.head = GameManager.Resource.Instantiate(head, GameManager.Player.player.GetChild(1).position, Quaternion.Euler(0, 0, 0), null, true).transform;

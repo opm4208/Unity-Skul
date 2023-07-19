@@ -32,7 +32,7 @@ public class Monster : MonoBehaviour
     {
         //animator.SetTrigger("Die");
         die = true;
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 0.5f);
     }
 
     private void SetLayersRecursively(Transform trans)

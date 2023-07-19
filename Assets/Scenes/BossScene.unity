@@ -1642,6 +1642,14 @@ PrefabInstance:
       propertyPath: slamRecovery
       value: 
       objectReference: {fileID: 1208722100}
+    - target: {fileID: 1338226189541169012, guid: 08c29c675cc34fd48b3ce46156406f49, type: 3}
+      propertyPath: m_TagString
+      value: Monster
+      objectReference: {fileID: 0}
+    - target: {fileID: 1338226189541169014, guid: 08c29c675cc34fd48b3ce46156406f49, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1338226190633296427, guid: 08c29c675cc34fd48b3ce46156406f49, type: 3}
       propertyPath: m_Name
       value: ElderEnt
@@ -6100,6 +6108,10 @@ PrefabInstance:
     - target: {fileID: 3716489896773502889, guid: e5283e9a82035884691924a7ecaef1cd, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7753500710925056516, guid: e5283e9a82035884691924a7ecaef1cd, type: 3}
+      propertyPath: m_TagString
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 7753500710925056517, guid: e5283e9a82035884691924a7ecaef1cd, type: 3}
       propertyPath: m_LocalPosition.x

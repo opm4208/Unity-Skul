@@ -27,16 +27,19 @@ public class Player : MonoBehaviour
     public bool dashCoolTime;
     public int dashCount;
 
-    public bool Woolf;
+    public bool change;
 
     public Animator animator;
     public Animator animator2;
+    public Animator chanimator;
     public Rigidbody2D rb;
     public SpriteRenderer rbSprite;
     public Transform head;  // 리틀본 스킬 A를 위한 변수
     public Transform player;
     public PlayerSkillAbstract skillA;
     public PlayerSkillAbstract skillB;
+    public PlayerSkillAbstract chSkillA;
+    public PlayerSkillAbstract chSkillB;
 
     public AudioSource jump;
     public AudioSource jumpAttack;
@@ -45,29 +48,75 @@ public class Player : MonoBehaviour
     public AudioSource attack2;
     private void Awake()
     {
-
         hp = maxHp;
         damage = 10;
-        dashPower = 10; // wolf=15;
+        dashPower = 10f; // wolf=15;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         rbSprite = GetComponent<SpriteRenderer>();
         player = GetComponent<Transform>();
-        dashJumpPower = 0; // wolf=20;
+        dashJumpPower = 20; // wolf=20;
         GameManager.Player = this;
         DontDestroyOnLoad(gameObject);
     }
-
+    public void Change()
+    {
+        if(change)
+            change = false;
+        else
+            change = true;
+        if(change)
+        {
+            animator.runtimeAnimatorController = chanimator.runtimeAnimatorController;
+            dashPower = 15;
+        }
+        else
+        {
+            animator.runtimeAnimatorController = animator2.runtimeAnimatorController;
+            dashPower = 10;
+        }
+    }
+    private void OnChange(InputValue value)
+    {
+        Change();
+    }
     private void OnSkillA(InputValue value)
     {
-        if (skillA.cooltimecheck)
+        if(change)
         {
-            skillA.Skill();
+            if (chSkillA.cooltimecheck)
+            {
+                chSkillA.Skill();
+                animator.SetTrigger("SkillA");
+            }
         }
+        else
+        {
+            if (skillA.cooltimecheck)
+            {
+                skillA.Skill();
+            }
+        }
+    }
+    IEnumerator SkiilB()
+    {
+        yield return new WaitForSeconds(0.5f);
+        chSkillB.Skill();
     }
     private void OnSkillS(InputValue value)
     {
-        if (skillB.cooltimecheck)
-            skillB.Skill();
+        if (change)
+        {
+            if (chSkillB.cooltimecheck)
+            {
+                StartCoroutine(SkiilB());
+                animator.SetTrigger("SkillB");
+            }
+        }
+        else
+        {
+            if (skillB.cooltimecheck)
+                skillB.Skill();
+        }
     }
 }

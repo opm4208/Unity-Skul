@@ -29,7 +29,7 @@ public class PlayerDash : MonoBehaviour
             GameManager.Resource.Instantiate(dash_Smoke, rightDashStartPoint.position, Quaternion.Euler(0, 0, 0), null, true);
         else
             GameManager.Resource.Instantiate(dash_Smoke, leftDashStartPoint.position, Quaternion.Euler(0, 0, 0), null, true);
-        DashStart();
+        float dashpower = DashStart();
         float currentTime = 0f;
         while (true)
         {
@@ -43,13 +43,13 @@ public class PlayerDash : MonoBehaviour
                 dashjump = true;
             if (player.rbSprite.flipX)
             {
-                transform.Translate(Vector2.left * player.dashPower * Time.deltaTime);
+                transform.Translate(Vector2.left * dashpower * Time.deltaTime);
             }
             else
             {
-                transform.Translate(Vector2.right * player.dashPower * Time.deltaTime);
+                transform.Translate(Vector2.right * dashpower * Time.deltaTime);
             }
-            if (!dashjump)
+            if (!dashjump&&player.change)
             {
                 player.rb.AddForce(new Vector2(0, player.dashJumpPower) * Time.deltaTime, ForceMode2D.Impulse);
             }
@@ -83,13 +83,15 @@ public class PlayerDash : MonoBehaviour
         player.rb.gravityScale = 1;
         player.isDash = false;
     }
-    private void DashStart()
+    private float DashStart()
     {
+        
         dashCTRoutine = StartCoroutine(DashCoolTime());
         player.dashCount++;
         player.rb.gravityScale = 0;
         player.rb.velocity = Vector2.up * 0;
         player.isDash = true;
         player.animator.SetTrigger("Dash");
+        return player.dashPower;
     }
 }
