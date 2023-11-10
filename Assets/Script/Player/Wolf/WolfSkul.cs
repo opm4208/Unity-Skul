@@ -27,6 +27,7 @@ public class WolfSkul : MonoBehaviour
             collision.gameObject.GetComponent<Player>().chSkillB = skillB;
             transform.parent = collision.transform;
             GameManager.Player.Change();
+            GameManager.Pool.canvasRoot.GetComponent<UiControler>().GetSkul();
         }
     }
 }

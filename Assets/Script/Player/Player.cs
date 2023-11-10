@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
     }
     public void Change()
     {
+        transform.position += new Vector3(0, 0, 0.1f);
         if(change)
             change = false;
         else
@@ -78,6 +79,7 @@ public class Player : MonoBehaviour
     }
     private void OnChange(InputValue value)
     {
+        GameManager.Pool.canvasRoot.GetComponent<UiControler>().TempImage();
         Change();
     }
     private void OnSkillA(InputValue value)

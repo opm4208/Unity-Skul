@@ -25,7 +25,14 @@ public class Potal : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.F)&&!trigger)
         {
-            GameManager.Pool.canvasRoot.GetComponent<UiControler>().MinimapSeton();
+            if(transform.tag == "BossPotal")
+            {
+                GameManager.Pool.canvasRoot.GetComponent<UiControler>().MinimapSetout();
+            }
+            else
+            {
+                GameManager.Pool.canvasRoot.GetComponent<UiControler>().MinimapSeton();
+            }
             trigger = true;
             GameManager.PortalManager.stageCount++;
             UnitySceneManager.LoadScene(GameManager.PortalManager.stageCount);
